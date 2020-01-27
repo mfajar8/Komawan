@@ -8,7 +8,7 @@
         public $table = 'admin';
         public $id = 'id_user';
         public $order = array('id_user' => 'asc');
-        public $select='*';
+        public $select='nama_user, NIP';
 
         function __construct()
         {
@@ -24,7 +24,7 @@
 							$this->column_search[]='password';
 							$this->column_search[]='nama_user';
 							$this->column_search[]='NIP';
-							
+
         }
 
         // get all

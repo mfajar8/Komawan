@@ -10,7 +10,11 @@
             parent::__construct();
             $this->load->model('Admin_model');
             $this->load->library('form_validation');
-	    $method=$this->router->fetch_method();
+	          $method=$this->router->fetch_method();
+
+            if($this->session->userdata('id_user') == null ){
+              redirect(base_url('auth/login'));
+            }
             // if($method != 'ajax_list'){
             //   if($this->session->userdata('status')!='login'){
             //     redirect(base_url('login'));
@@ -50,7 +54,7 @@
 							$row[] = $Admin_model->password;
 							$row[] = $Admin_model->nama_user;
 							$row[] = $Admin_model->NIP;
-							
+
               $row[] ="
               <a href='admin/edit/$Admin_model->id_user'><i class='m-1 feather icon-edit-2'></i></a>
               <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Admin_model->id_user' href='#'><i class='feather icon-trash'></i></a>";
@@ -105,7 +109,7 @@ public function create_action()
 					'password' => $this->input->post('password',TRUE),
 					'nama_user' => $this->input->post('nama_user',TRUE),
 					'NIP' => $this->input->post('NIP',TRUE),
-					
+
 );
 
             $this->Admin_model->insert($data);
@@ -129,7 +133,7 @@ public function create_action()
 					'password' => $this->input->post('password',TRUE),
 					'nama_user' => $this->input->post('nama_user',TRUE),
 					'NIP' => $this->input->post('NIP',TRUE),
-					
+
 );
 
             $this->Admin_model->update($this->input->post('id_user', TRUE), $data);
