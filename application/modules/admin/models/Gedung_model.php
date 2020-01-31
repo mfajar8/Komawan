@@ -3,7 +3,7 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Gedung_model extends CI_Model
+    class gedung_model extends CI_Model
     {
         public $table = 'gedung';
         public $id = 'id_gedung';
@@ -22,7 +22,7 @@
 							$this->column_search[]='nama_gedung';
 							$this->column_search[]='letak_gedung';
 							$this->column_search[]='keterangan_gedung';
-							
+
         }
 
         // get all

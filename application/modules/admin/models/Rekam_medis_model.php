@@ -3,7 +3,7 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Rekam_medis_model extends CI_Model
+    class rekam_medis_model extends CI_Model
     {
         public $table = 'rekam_medis';
         public $id = 'id_rekam_medis';
@@ -28,7 +28,7 @@
 							$this->column_search[]='id_ruangan';
 							$this->column_search[]='id_user';
 							$this->column_search[]='id_alat';
-							
+
         }
 
         // get all

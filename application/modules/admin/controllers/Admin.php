@@ -3,12 +3,12 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Admin extends MY_Controller
+    class admin extends MY_Controller
     {
         function __construct()
         {
             parent::__construct();
-            $this->load->model('Admin_model');
+            $this->load->model('admin_model');
             $this->load->library('form_validation');
 	          $method=$this->router->fetch_method();
 
@@ -23,8 +23,8 @@
         }
 
         public function index()
-        {$dataadmin=$this->Admin_model->get_all();//panggil ke modell
-          $datafield=$this->Admin_model->get_field();//panggil ke modell
+        {$dataadmin=$this->admin_model->get_all();//panggil ke modell
+          $datafield=$this->admin_model->get_field();//panggil ke modell
 
            $data = array(
              'content'=>'admin/admin/admin_list',
@@ -43,28 +43,28 @@
         //DataTable
         public function ajax_list()
       {
-          $list = $this->Admin_model->get_datatables();
+          $list = $this->admin_model->get_datatables();
           $data = array();
           $no = $_POST['start'];
-          foreach ($list as $Admin_model) {
+          foreach ($list as $admin_model) {
               $no++;
               $row = array();
               $row[] = $no;
-							$row[] = $Admin_model->username;
-							$row[] = $Admin_model->password;
-							$row[] = $Admin_model->nama_user;
-							$row[] = $Admin_model->NIP;
+							$row[] = $admin_model->username;
+							$row[] = $admin_model->password;
+							$row[] = $admin_model->nama_user;
+							$row[] = $admin_model->NIP;
 
               $row[] ="
-              <a href='admin/edit/$Admin_model->id_user'><i class='m-1 feather icon-edit-2'></i></a>
-              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Admin_model->id_user' href='#'><i class='feather icon-trash'></i></a>";
+              <a href='admin/edit/$admin_model->id_user'><i class='m-1 feather icon-edit-2'></i></a>
+              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$admin_model->id_user' href='#'><i class='feather icon-trash'></i></a>";
               $data[] = $row;
           }
 
           $output = array(
                           "draw" => $_POST['draw'],
-                          "recordsTotal" => $this->Admin_model->count_all(),
-                          "recordsFiltered" => $this->Admin_model->count_filtered(),
+                          "recordsTotal" => $this->admin_model->count_all(),
+                          "recordsFiltered" => $this->admin_model->count_filtered(),
                           "data" => $data,
                   );
           //output to json format
@@ -85,7 +85,7 @@
         }
 
         public function edit($id_user){
-          $dataedit=$this->Admin_model->get_by_id($id_user);
+          $dataedit=$this->admin_model->get_by_id($id_user);
            $data = array(
              'content'=>'admin/admin/admin_edit',
              'sidebar'=>'admin/sidebar',
@@ -112,7 +112,7 @@ public function create_action()
 
 );
 
-            $this->Admin_model->insert($data);
+            $this->admin_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('admin/admin'));
         }
@@ -136,7 +136,7 @@ public function create_action()
 
 );
 
-            $this->Admin_model->update($this->input->post('id_user', TRUE), $data);
+            $this->admin_model->update($this->input->post('id_user', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('admin/admin'));
         }
@@ -144,10 +144,10 @@ public function create_action()
 
     public function delete($id_user)
     {
-        $row = $this->Admin_model->get_by_id($id_user);
+        $row = $this->admin_model->get_by_id($id_user);
 
         if ($row) {
-            $this->Admin_model->delete($id_user);
+            $this->admin_model->delete($id_user);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('admin/admin'));
         } else {

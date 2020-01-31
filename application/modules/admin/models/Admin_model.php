@@ -3,7 +3,7 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Admin_model extends CI_Model
+    class admin_model extends CI_Model
     {
         public $table = 'admin';
         public $id = 'id_user';

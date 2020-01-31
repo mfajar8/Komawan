@@ -3,12 +3,12 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Gedung extends MY_Controller
+    class gedung extends MY_Controller
     {
         function __construct()
         {
             parent::__construct();
-            $this->load->model('Gedung_model');
+            $this->load->model('gedung_model');
             $this->load->library('form_validation');
 	          $method=$this->router->fetch_method();
 
@@ -23,8 +23,8 @@
         }
 
         public function index()
-        {$datagedung=$this->Gedung_model->get_all();//panggil ke modell
-          $datafield=$this->Gedung_model->get_field();//panggil ke modell
+        {$datagedung=$this->gedung_model->get_all();//panggil ke modell
+          $datafield=$this->gedung_model->get_field();//panggil ke modell
 
            $data = array(
              'content'=>'admin/gedung/gedung_list',
@@ -43,27 +43,27 @@
         //DataTable
         public function ajax_list()
       {
-          $list = $this->Gedung_model->get_datatables();
+          $list = $this->gedung_model->get_datatables();
           $data = array();
           $no = $_POST['start'];
-          foreach ($list as $Gedung_model) {
+          foreach ($list as $gedung_model) {
               $no++;
               $row = array();
               $row[] = $no;
-							$row[] = $Gedung_model->nama_gedung;
-							$row[] = $Gedung_model->letak_gedung;
-							$row[] = $Gedung_model->keterangan_gedung;
+							$row[] = $gedung_model->nama_gedung;
+							$row[] = $gedung_model->letak_gedung;
+							$row[] = $gedung_model->keterangan_gedung;
 
               $row[] ="
-              <a href='gedung/edit/$Gedung_model->id_gedung'><i class='m-1 feather icon-edit-2'></i></a>
-              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Gedung_model->id_gedung' href='#'><i class='feather icon-trash'></i></a>";
+              <a href='gedung/edit/$gedung_model->id_gedung'><i class='m-1 feather icon-edit-2'></i></a>
+              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$gedung_model->id_gedung' href='#'><i class='feather icon-trash'></i></a>";
               $data[] = $row;
           }
 
           $output = array(
                           "draw" => $_POST['draw'],
-                          "recordsTotal" => $this->Gedung_model->count_all(),
-                          "recordsFiltered" => $this->Gedung_model->count_filtered(),
+                          "recordsTotal" => $this->gedung_model->count_all(),
+                          "recordsFiltered" => $this->gedung_model->count_filtered(),
                           "data" => $data,
                   );
           //output to json format
@@ -84,7 +84,7 @@
         }
 
         public function edit($id_gedung){
-          $dataedit=$this->Gedung_model->get_by_id($id_gedung);
+          $dataedit=$this->gedung_model->get_by_id($id_gedung);
            $data = array(
              'content'=>'admin/gedung/gedung_edit',
              'sidebar'=>'admin/sidebar',
@@ -110,7 +110,7 @@ public function create_action()
 
 );
 
-            $this->Gedung_model->insert($data);
+            $this->gedung_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('admin/gedung'));
         }
@@ -133,7 +133,7 @@ public function create_action()
 
 );
 
-            $this->Gedung_model->update($this->input->post('id_gedung', TRUE), $data);
+            $this->gedung_model->update($this->input->post('id_gedung', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('admin/gedung'));
         }
@@ -141,10 +141,10 @@ public function create_action()
 
     public function delete($id_gedung)
     {
-        $row = $this->Gedung_model->get_by_id($id_gedung);
+        $row = $this->gedung_model->get_by_id($id_gedung);
 
         if ($row) {
-            $this->Gedung_model->delete($id_gedung);
+            $this->gedung_model->delete($id_gedung);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('admin/gedung'));
         } else {

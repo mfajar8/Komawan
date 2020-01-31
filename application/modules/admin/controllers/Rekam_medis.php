@@ -3,12 +3,12 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Rekam_medis extends MY_Controller
+    class rekam_medis extends MY_Controller
     {
         function __construct()
         {
             parent::__construct();
-            $this->load->model('Rekam_medis_model');
+            $this->load->model('rekam_medis_model');
             $this->load->library('form_validation');
 	          $method=$this->router->fetch_method();
 
@@ -23,8 +23,8 @@
         }
 
         public function index()
-        {$datarekam_medis=$this->Rekam_medis_model->get_all();//panggil ke modell
-          $datafield=$this->Rekam_medis_model->get_field();//panggil ke modell
+        {$datarekam_medis=$this->rekam_medis_model->get_all();//panggil ke modell
+          $datafield=$this->rekam_medis_model->get_field();//panggil ke modell
 
            $data = array(
              'content'=>'admin/rekam_medis/rekam_medis_list',
@@ -43,29 +43,29 @@
         //DataTable
         public function ajax_list()
       {
-          $list = $this->Rekam_medis_model->get_datatables();
+          $list = $this->rekam_medis_model->get_datatables();
           $data = array();
           $no = $_POST['start'];
-          foreach ($list as $Rekam_medis_model) {
+          foreach ($list as $rekam_medis_model) {
               $no++;
               $row = array();
               $row[] = $no;
-							$row[] = $Rekam_medis_model->berat_infus;
-							$row[] = $Rekam_medis_model->waktu_pasang;
-							$row[] = $Rekam_medis_model->waktu_selesai;
-							$row[] = $Rekam_medis_model->id_ruangan;
-							$row[] = $Rekam_medis_model->id_user;
+							$row[] = $rekam_medis_model->berat_infus;
+							$row[] = $rekam_medis_model->waktu_pasang;
+							$row[] = $rekam_medis_model->waktu_selesai;
+							$row[] = $rekam_medis_model->id_ruangan;
+							$row[] = $rekam_medis_model->id_user;
 
               $row[] ="
-              <a href='rekam_medis/edit/$Rekam_medis_model->id_rekam_medis'><i class='m-1 feather icon-edit-2'></i></a>
-              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Rekam_medis_model->id_rekam_medis' href='#'><i class='feather icon-trash'></i></a>";
+              <a href='rekam_medis/edit/$rekam_medis_model->id_rekam_medis'><i class='m-1 feather icon-edit-2'></i></a>
+              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$rekam_medis_model->id_rekam_medis' href='#'><i class='feather icon-trash'></i></a>";
               $data[] = $row;
           }
 
           $output = array(
                           "draw" => $_POST['draw'],
-                          "recordsTotal" => $this->Rekam_medis_model->count_all(),
-                          "recordsFiltered" => $this->Rekam_medis_model->count_filtered(),
+                          "recordsTotal" => $this->rekam_medis_model->count_all(),
+                          "recordsFiltered" => $this->rekam_medis_model->count_filtered(),
                           "data" => $data,
                   );
           //output to json format
@@ -86,7 +86,7 @@
         }
 
         public function edit($id_rekam_medis){
-          $dataedit=$this->Rekam_medis_model->get_by_id($id_rekam_medis);
+          $dataedit=$this->rekam_medis_model->get_by_id($id_rekam_medis);
            $data = array(
              'content'=>'admin/rekam_medis/rekam_medis_edit',
              'sidebar'=>'admin/sidebar',
@@ -114,7 +114,7 @@ public function create_action()
 
 );
 
-            $this->Rekam_medis_model->insert($data);
+            $this->rekam_medis_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('admin/rekam_medis'));
         }
@@ -139,7 +139,7 @@ public function create_action()
 
 );
 
-            $this->Rekam_medis_model->update($this->input->post('id_rekam_medis', TRUE), $data);
+            $this->rekam_medis_model->update($this->input->post('id_rekam_medis', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('admin/rekam_medis'));
         }
@@ -147,10 +147,10 @@ public function create_action()
 
     public function delete($id_rekam_medis)
     {
-        $row = $this->Rekam_medis_model->get_by_id($id_rekam_medis);
+        $row = $this->rekam_medis_model->get_by_id($id_rekam_medis);
 
         if ($row) {
-            $this->Rekam_medis_model->delete($id_rekam_medis);
+            $this->rekam_medis_model->delete($id_rekam_medis);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('admin/rekam_medis'));
         } else {

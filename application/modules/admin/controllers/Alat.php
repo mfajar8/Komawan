@@ -3,12 +3,12 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Alat extends MY_Controller
+    class alat extends MY_Controller
     {
         function __construct()
         {
             parent::__construct();
-            $this->load->model('Alat_model');
+            $this->load->model('alat_model');
             $this->load->library('form_validation');
 	          $method=$this->router->fetch_method();
 
@@ -23,8 +23,8 @@
         }
 
         public function index()
-        {$dataalat=$this->Alat_model->get_all();//panggil ke modell
-          $datafield=$this->Alat_model->get_field();//panggil ke modell
+        {$dataalat=$this->alat_model->get_all();//panggil ke modell
+          $datafield=$this->alat_model->get_field();//panggil ke modell
 
            $data = array(
              'content'=>'admin/alat/alat_list',
@@ -43,26 +43,26 @@
         //DataTable
         public function ajax_list()
       {
-          $list = $this->Alat_model->get_datatables();
+          $list = $this->alat_model->get_datatables();
           $data = array();
           $no = $_POST['start'];
-          foreach ($list as $Alat_model) {
+          foreach ($list as $alat_model) {
               $no++;
               $row = array();
               $row[] = $no;
-							$row[] = $Alat_model->nomor_alat;
-							$row[] = $Alat_model->status_alat;
+							$row[] = $alat_model->nomor_alat;
+							$row[] = $alat_model->status_alat;
 
               $row[] ="
-              <a href='alat/edit/$Alat_model->id_alat'><i class='m-1 feather icon-edit-2'></i></a>
-              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Alat_model->id_alat' href='#'><i class='feather icon-trash'></i></a>";
+              <a href='alat/edit/$alat_model->id_alat'><i class='m-1 feather icon-edit-2'></i></a>
+              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$alat_model->id_alat' href='#'><i class='feather icon-trash'></i></a>";
               $data[] = $row;
           }
 
           $output = array(
                           "draw" => $_POST['draw'],
-                          "recordsTotal" => $this->Alat_model->count_all(),
-                          "recordsFiltered" => $this->Alat_model->count_filtered(),
+                          "recordsTotal" => $this->alat_model->count_all(),
+                          "recordsFiltered" => $this->alat_model->count_filtered(),
                           "data" => $data,
                   );
           //output to json format
@@ -83,7 +83,7 @@
         }
 
         public function edit($id_alat){
-          $dataedit=$this->Alat_model->get_by_id($id_alat);
+          $dataedit=$this->alat_model->get_by_id($id_alat);
            $data = array(
              'content'=>'admin/alat/alat_edit',
              'sidebar'=>'admin/sidebar',
@@ -108,7 +108,7 @@ public function create_action()
 
 );
 
-            $this->Alat_model->insert($data);
+            $this->alat_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('admin/alat'));
         }
@@ -130,7 +130,7 @@ public function create_action()
 
 );
 
-            $this->Alat_model->update($this->input->post('id_alat', TRUE), $data);
+            $this->alat_model->update($this->input->post('id_alat', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('admin/alat'));
         }
@@ -138,10 +138,10 @@ public function create_action()
 
     public function delete($id_alat)
     {
-        $row = $this->Alat_model->get_by_id($id_alat);
+        $row = $this->alat_model->get_by_id($id_alat);
 
         if ($row) {
-            $this->Alat_model->delete($id_alat);
+            $this->alat_model->delete($id_alat);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('admin/alat'));
         } else {

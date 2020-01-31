@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends MY_Controller{
+class auth extends MY_Controller{
 
   public function __construct()
   {
     parent::__construct();
     //Codeigniter : Write Less Do More
-    $this->load->model(array('Auth_model'));
+    $this->load->model(array('auth_model'));
   }
 
   function index()
@@ -28,7 +28,7 @@ class Auth extends MY_Controller{
   function login_action(){
     $username=$this->input->post('username');
     $password=$this->input->post('password');
-    $dataUser=$this->Auth_model->getUser($username,SHA1($password));
+    $dataUser=$this->auth_model->getUser($username,SHA1($password));
     if($dataUser->num_rows()>0){
       $dataUser=$dataUser->row();
       echo $dataUser->username;

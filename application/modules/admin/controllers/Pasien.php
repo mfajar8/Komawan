@@ -3,12 +3,12 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Pasien extends MY_Controller
+    class pasien extends MY_Controller
     {
         function __construct()
         {
             parent::__construct();
-            $this->load->model('Pasien_model');
+            $this->load->model('pasien_model');
             $this->load->library('form_validation');
 	          $method=$this->router->fetch_method();
 
@@ -23,8 +23,8 @@
         }
 
         public function index()
-        {$datapasien=$this->Pasien_model->get_all();//panggil ke modell
-          $datafield=$this->Pasien_model->get_field();//panggil ke modell
+        {$datapasien=$this->pasien_model->get_all();//panggil ke modell
+          $datafield=$this->pasien_model->get_field();//panggil ke modell
 
            $data = array(
              'content'=>'admin/pasien/pasien_list',
@@ -43,29 +43,29 @@
         //DataTable
         public function ajax_list()
       {
-          $list = $this->Pasien_model->get_datatables();
+          $list = $this->pasien_model->get_datatables();
           $data = array();
           $no = $_POST['start'];
-          foreach ($list as $Pasien_model) {
+          foreach ($list as $pasien_model) {
               $no++;
               $row = array();
               $row[] = $no;
-							$row[] = $Pasien_model->nama_pasien;
-							$row[] = $Pasien_model->jenis_kelamin;
-							$row[] = $Pasien_model->ttl;
-							$row[] = $Pasien_model->alamat;
-							$row[] = $Pasien_model->id_rekam_medis;
+							$row[] = $pasien_model->nama_pasien;
+							$row[] = $pasien_model->jenis_kelamin;
+							$row[] = $pasien_model->ttl;
+							$row[] = $pasien_model->alamat;
+							$row[] = $pasien_model->id_rekam_medis;
 
               $row[] ="
-              <a href='pasien/edit/$Pasien_model->id_pasien'><i class='m-1 feather icon-edit-2'></i></a>
-              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$Pasien_model->id_pasien' href='#'><i class='feather icon-trash'></i></a>";
+              <a href='pasien/edit/$pasien_model->id_pasien'><i class='m-1 feather icon-edit-2'></i></a>
+              <a class='modalDelete' data-toggle='modal' data-target='#responsive-modal' value='$pasien_model->id_pasien' href='#'><i class='feather icon-trash'></i></a>";
               $data[] = $row;
           }
 
           $output = array(
                           "draw" => $_POST['draw'],
-                          "recordsTotal" => $this->Pasien_model->count_all(),
-                          "recordsFiltered" => $this->Pasien_model->count_filtered(),
+                          "recordsTotal" => $this->pasien_model->count_all(),
+                          "recordsFiltered" => $this->pasien_model->count_filtered(),
                           "data" => $data,
                   );
           //output to json format
@@ -86,7 +86,7 @@
         }
 
         public function edit($id_pasien){
-          $dataedit=$this->Pasien_model->get_by_id($id_pasien);
+          $dataedit=$this->pasien_model->get_by_id($id_pasien);
            $data = array(
              'content'=>'admin/pasien/pasien_edit',
              'sidebar'=>'admin/sidebar',
@@ -114,7 +114,7 @@ public function create_action()
 
 );
 
-            $this->Pasien_model->insert($data);
+            $this->pasien_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('admin/pasien'));
         }
@@ -139,7 +139,7 @@ public function create_action()
 
 );
 
-            $this->Pasien_model->update($this->input->post('id_pasien', TRUE), $data);
+            $this->pasien_model->update($this->input->post('id_pasien', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('admin/pasien'));
         }
@@ -147,10 +147,10 @@ public function create_action()
 
     public function delete($id_pasien)
     {
-        $row = $this->Pasien_model->get_by_id($id_pasien);
+        $row = $this->pasien_model->get_by_id($id_pasien);
 
         if ($row) {
-            $this->Pasien_model->delete($id_pasien);
+            $this->pasien_model->delete($id_pasien);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('admin/pasien'));
         } else {

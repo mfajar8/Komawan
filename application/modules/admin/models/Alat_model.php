@@ -3,7 +3,7 @@
     if (!defined('BASEPATH'))
         exit('No direct script access allowed');
 
-    class Alat_model extends CI_Model
+    class alat_model extends CI_Model
     {
         public $table = 'alat';
         public $id = 'id_alat';
@@ -20,7 +20,7 @@
 							$this->column_order[]='status_alat';
 							$this->column_search[]='nomor_alat';
 							$this->column_search[]='status_alat';
-							
+
         }
 
         // get all
